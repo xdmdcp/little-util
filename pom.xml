@@ -210,12 +210,6 @@
         <artifactId>jjwt-jackson</artifactId>
         <version>0.11.2</version>
       </dependency>
-      <!-- 第三方登陆 -->
-      <dependency>
-        <groupId>me.zhyd.oauth</groupId>
-        <artifactId>JustAuth</artifactId>
-        <version>1.16.6</version>
-      </dependency>
       <!-- Hutool -->
       <dependency>
         <groupId>cn.hutool</groupId>

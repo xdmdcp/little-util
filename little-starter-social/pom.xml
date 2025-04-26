@@ -15,6 +15,8 @@
 
   <properties>
     <module.name>cn.chenlijian.little.starter.social</module.name>
+    <!--JustAuth版本-->
+    <justauth.version>1.16.7</justauth.version>
   </properties>
 
   <dependencies>
@@ -27,10 +29,16 @@
     <dependency>
       <groupId>me.zhyd.oauth</groupId>
       <artifactId>JustAuth</artifactId>
+      <version>${justauth.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <!-- JUnit 4 依赖 -->
@@ -41,11 +49,11 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Mockito 3 依赖 -->
+    <!-- 添加 mockito-inline -->
     <dependency>
       <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>3.12.4</version>
+      <artifactId>mockito-inline</artifactId>
+      <version>4.0.0</version> <!-- 使用最新版本 -->
       <scope>test</scope>
     </dependency>
   </dependencies>
