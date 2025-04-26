@@ -3,10 +3,10 @@ package cn.chenlijian.little.starter.social.util;
 import cn.chenlijian.little.starter.social.properties.SocialExtendProperties;
 import cn.chenlijian.little.starter.social.properties.SocialProperties;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.xkcoding.http.config.HttpConfig;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthConfig;
@@ -92,6 +92,9 @@ public class SocialUtil {
         }
     }
 
+    private SocialUtil() {
+    }
+
     /**
      * 获取类型列表。
      * <p>
@@ -141,18 +144,17 @@ public class SocialUtil {
         return result;
     }
 
-
     /**
      * 根据来源和社交属性获取认证请求对象
      *
-     * @param source 认证请求的来源，例如微博、微信等
+     * @param source     认证请求的来源，例如微博、微信等
      * @param properties 包含社交认证属性的配置对象
      * @return 认证请求对象
      * @throws AuthException 如果认证请求的来源为空或不支持，则抛出此异常
      */
     public static AuthRequest getAuthRequest(String source, SocialProperties properties) throws AuthException {
         // 检查认证来源是否为空，如果为空则抛出异常
-        if (StrUtil.isBlank(source)) {
+        if (CharSequenceUtil.isBlank(source)) {
             throw new AuthException(AuthResponseStatus.NO_AUTH_SOURCE);
         }
 
@@ -191,7 +193,7 @@ public class SocialUtil {
      * 根据提供的源和社交属性配置，获取默认的认证请求对象
      * 此方法用于初始化一个AuthRequest对象，该对象包含了进行社交认证所需的所有配置信息
      *
-     * @param source 社交平台的标识符，例如"weibo"，用于确定使用哪种社交平台进行认证
+     * @param source     社交平台的标识符，例如"weibo"，用于确定使用哪种社交平台进行认证
      * @param properties 包含了所有社交平台相关配置的属性对象，用于获取特定社交平台的详细配置信息
      * @return 返回一个初始化后的AuthRequest对象，如果配置无效或解析源失败，则返回null
      */
@@ -220,39 +222,6 @@ public class SocialUtil {
     }
 
     /**
-     * 获取默认的认证请求对象
-     * 根据提供的认证源和认证配置，实例化并返回对应的认证请求对象
-     *
-     * @param authSource 认证源，用于确定使用哪种认证方式
-     * @param authConfig 认证配置，包含认证所需的配置信息
-     * @return 实例化的认证请求对象
-     * @throws AuthException 如果认证配置为空或没有找到对应的请求类，则抛出认证异常
-     */
-    private static AuthRequest getDefaultAuthRequest(AuthDefaultSource authSource, AuthConfig authConfig) {
-        // 检查认证配置是否为空，如果为空则抛出认证异常
-        if (authConfig == null) {
-            throw new AuthException("Authentication configuration is null");
-        }
-
-        // 根据认证源获取对应的认证请求类
-        Class<? extends AuthRequest> requestClass = DEFAULT_REQUEST_MAP.get(authSource);
-        // 如果没有找到对应的请求类，则抛出认证异常
-        if (requestClass == null) {
-            throw new AuthException("No request class found for authentication source");
-        }
-
-        // 尝试实例化认证请求对象
-        try {
-            return ReflectUtil.newInstance(requestClass, authConfig);
-        } catch (Exception e) {
-            // 如果实例化失败，记录错误信息并抛出认证异常
-            String errorMessage = "Failed to instantiate request class for source: " + authSource.name() + ", Error: " + e.getMessage();
-            log.error(errorMessage, e);
-            throw new AuthException(errorMessage);
-        }
-    }
-
-    /**
      * 根据指定的参数获取扩展的认证请求对象。
      *
      * @param clazz      枚举类类型，用于验证 source 是否为合法的枚举值。
@@ -261,9 +230,9 @@ public class SocialUtil {
      * @return 返回一个 AuthRequest 对象，如果无法创建或配置无效则返回 null。
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private static AuthRequest getExtendRequest(Class clazz, String source, SocialProperties properties) {
+    public static AuthRequest getExtendRequest(Class clazz, String source, SocialProperties properties) {
         // 如果 source 为空或空白字符串，直接返回 null。
-        if (StrUtil.isBlank(source)) {
+        if (CharSequenceUtil.isBlank(source)) {
             return null;
         }
 
@@ -318,16 +287,48 @@ public class SocialUtil {
         }
     }
 
+    /**
+     * 获取默认的认证请求对象
+     * 根据提供的认证源和认证配置，实例化并返回对应的认证请求对象
+     *
+     * @param authSource 认证源，用于确定使用哪种认证方式
+     * @param authConfig 认证配置，包含认证所需的配置信息
+     * @return 实例化的认证请求对象
+     * @throws AuthException 如果认证配置为空或没有找到对应的请求类，则抛出认证异常
+     */
+    private static AuthRequest getDefaultAuthRequest(AuthDefaultSource authSource, AuthConfig authConfig) {
+        // 检查认证配置是否为空，如果为空则抛出认证异常
+        if (authConfig == null) {
+            throw new AuthException("Authentication configuration is null");
+        }
+
+        // 根据认证源获取对应的认证请求类
+        Class<? extends AuthRequest> requestClass = DEFAULT_REQUEST_MAP.get(authSource);
+        // 如果没有找到对应的请求类，则抛出认证异常
+        if (requestClass == null) {
+            throw new AuthException("No request class found for authentication source");
+        }
+
+        // 尝试实例化认证请求对象
+        try {
+            return ReflectUtil.newInstance(requestClass, authConfig);
+        } catch (Exception e) {
+            // 如果实例化失败，记录错误信息并抛出认证异常
+            String errorMessage = "Failed to instantiate request class for source: " + authSource.name() + ", Error: " + e.getMessage();
+            log.error(errorMessage, e);
+            throw new AuthException(errorMessage);
+        }
+    }
 
     /**
      * 配置HTTP相关的代理和超时设置。
      *
-     * @param authSource   认证来源，用于从代理配置中查找对应的代理信息。
-     * @param authConfig   认证配置对象，用于存储最终生成的HTTP配置。
-     * @param httpConfig   HTTP配置对象，包含代理和超时等相关信息。
-     *
-     * 该方法会根据传入的HTTP配置对象，解析代理和超时设置，并将其应用到认证配置对象中。
-     * 如果配置无效或缺失，会记录警告日志并跳过相关配置。
+     * @param authSource 认证来源，用于从代理配置中查找对应的代理信息。
+     * @param authConfig 认证配置对象，用于存储最终生成的HTTP配置。
+     * @param httpConfig HTTP配置对象，包含代理和超时等相关信息。
+     *                   <p>
+     *                   该方法会根据传入的HTTP配置对象，解析代理和超时设置，并将其应用到认证配置对象中。
+     *                   如果配置无效或缺失，会记录警告日志并跳过相关配置。
      */
     private static void setHttpConfig(String authSource, AuthConfig authConfig, SocialProperties.AuthHttpConfig httpConfig) {
         // 如果HTTP配置为空，记录警告日志并直接返回
@@ -369,7 +370,7 @@ public class SocialUtil {
         // 验证代理主机名和端口的有效性，如果无效，记录错误日志并直接返回
         String hostname = proxyConfig.getHostname();
         int port = proxyConfig.getPort();
-        if (StrUtil.isBlank(hostname) || port <= 0 || port > 65535) {
+        if (CharSequenceUtil.isBlank(hostname) || port <= 0 || port > 65535) {
             log.error("Invalid proxy hostname or port: hostname={}, port={}. Skipping proxy configuration.", hostname, port);
             return;
         }
@@ -381,14 +382,13 @@ public class SocialUtil {
                 .build());
     }
 
-
     /**
      * 根据传入的 source 字符串解析并返回对应的 AuthDefaultSource 对象。
      *
      * @param source 社交平台来源的标识字符串，通常为平台名称或其缩写。
      *               该参数会被转换为大写后用于查找缓存中的对应对象。
      * @return 返回与 source 对应的 AuthDefaultSource 对象。
-     *         如果缓存中不存在对应的对象，则抛出异常。
+     * 如果缓存中不存在对应的对象，则抛出异常。
      * @throws AuthException 如果传入的 source 无法匹配到任何已知的社交平台来源，
      *                       则抛出此异常，并附带错误信息。
      */
@@ -405,14 +405,13 @@ public class SocialUtil {
         return cachedSource;
     }
 
-
     /**
      * 将输入的配置映射中的键转换为大写形式，并返回一个新的映射。
      *
      * @param extendConfig 原始配置映射，其中键为字符串，值为 SocialExtendProperties.AuthRequestExtendConfig 类型。
      *                     该参数不能为空，且应包含需要处理的键值对。
      * @return 一个新的映射，其中所有键都被转换为大写形式，值保持不变。
-     *         如果存在重复的键（忽略大小写），则保留原始映射中首次出现的值。
+     * 如果存在重复的键（忽略大小写），则保留原始映射中首次出现的值。
      */
     private static Map<String, SocialExtendProperties.AuthRequestExtendConfig> getUpperConfigCache(Map<String, SocialExtendProperties.AuthRequestExtendConfig> extendConfig) {
         // 使用流操作将原始映射的键转换为大写形式，并收集到一个新的 HashMap 中。
@@ -448,14 +447,13 @@ public class SocialUtil {
         return ReflectUtil.newInstance(requestClass, config);
     }
 
-
     /**
      * 检查给定的类是否包含一个接受两个 Object 类型参数的构造函数。
      *
      * @param clazz 要检查的类的 Class 对象。
      *              该参数不能为 null，且应为一个有效的类对象。
      * @return 如果类中存在一个接受两个 Object 类型参数的构造函数，则返回 true；
-     *         如果不存在这样的构造函数，则返回 false。
+     * 如果不存在这样的构造函数，则返回 false。
      */
     private static boolean hasTwoArgsConstructor(Class<?> clazz) {
         try {
