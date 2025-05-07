@@ -44,7 +44,7 @@
   <modules>
     <module>little-common</module>
     <module>little-core</module>
-    <module>little-log-starter</module>
+    <module>little-starter-log</module>
     <module>little-security-starter</module>
   </modules>
 
