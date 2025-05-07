@@ -43,9 +43,7 @@
 
   <modules>
     <module>little-common</module>
-<!--    <module>little-core</module>-->
-<!--    <module>little-security-starter</module>-->
-<!--    <module>little-log-starter</module>-->
+    <module>little-core</module>
   </modules>
 
   <dependencyManagement>
