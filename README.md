@@ -17,4 +17,7 @@
 - [ ] little-starter-mq: 消息队列模块，支持 Kafka、RabbitMQ、RocketMQ 等。
 - [ ] little-starter-swagger: swagger文档模块，用于API文档生成。
 - [ ] little-starter-social: 第三方登录模块，基于 JustAuth 实现。
-- [ ] little-starter-boot: Spring Boot 启动相关配置，包含自动装配、文件处理等功能。
+
+## 应用模块
+
+- [ ] little-starter-web: 为 Web 应用提供通用能力支持，简化 Web 层开发，确保统一技术规范。
