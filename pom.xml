@@ -44,6 +44,7 @@
   <modules>
     <module>little-common</module>
     <module>little-core</module>
+    <module>little-log-starter</module>
   </modules>
 
   <dependencyManagement>
@@ -76,11 +77,11 @@
         <scope>provided</scope>
       </dependency>
       <!-- little tool -->
-<!--      <dependency>-->
-<!--        <groupId>cn.chenlijian.little</groupId>-->
-<!--        <artifactId>little-core</artifactId>-->
-<!--        <version>${revision}</version>-->
-<!--      </dependency>-->
+      <dependency>
+        <groupId>cn.chenlijian.little</groupId>
+        <artifactId>little-core</artifactId>
+        <version>${revision}</version>
+      </dependency>
 <!--      <dependency>-->
 <!--        <groupId>cn.chenlijian.little</groupId>-->
 <!--        <artifactId>little-security-starter</artifactId>-->
