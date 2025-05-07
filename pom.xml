@@ -3,15 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.chenlijian.little</groupId>
-  <artifactId>little-util</artifactId>
+  <artifactId>little</artifactId>
   <version>${revision}</version>
   <packaging>pom</packaging>
-  <name>little-util</name>
+  <name>little</name>
 
   <properties>
-    <!-- Little-Util Version -->
+    <!-- Little Version -->
     <revision>1.0.0-SNAPSHOT</revision>
-    <module.name>cn.chenlijian.little.util</module.name>
+    <module.name>cn.chenlijian.little</module.name>
     <!-- jdk Version -->
     <java.version>17</java.version>
     <maven.plugin.version>3.11.0</maven.plugin.version>
@@ -32,6 +32,7 @@
     <protostuff.version>1.6.0</protostuff.version>
     <disruptor.version>3.4.2</disruptor.version>
     <lombok.version>1.18.36</lombok.version>
+    <mica.auto.version>3.1.4</mica.auto.version>
     <druid.version>1.2.23</druid.version>
     <hutool.version>5.8.24</hutool.version>
 
@@ -41,20 +42,10 @@
   </properties>
 
   <modules>
-    <module>little-core-boot</module>
-    <module>little-core-bom</module>
-    <module>little-core-common</module>
-    <module>little-starter-log</module>
-    <module>little-starter-swagger</module>
-    <module>little-starter-mybatis</module>
-    <module>little-starter-cache</module>
-    <module>little-starter-social</module>
-    <module>little-starter-validator</module>
-    <module>little-starter-echo</module>
-    <module>little-core-secure</module>
-    <module>little-core-launch</module>
-    <module>little-starter-oss</module>
-    <module>little-starter-monitor</module>
+    <module>little-common</module>
+<!--    <module>little-core</module>-->
+    <module>little-security-starter</module>
+<!--    <module>little-log-starter</module>-->
   </modules>
 
   <dependencyManagement>
@@ -80,55 +71,21 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>net.dreamlu</groupId>
+        <artifactId>mica-auto</artifactId>
+        <version>${mica.auto.version}</version>
+        <scope>provided</scope>
+      </dependency>
       <!-- little tool -->
+<!--      <dependency>-->
+<!--        <groupId>cn.chenlijian.little</groupId>-->
+<!--        <artifactId>little-core</artifactId>-->
+<!--        <version>${revision}</version>-->
+<!--      </dependency>-->
       <dependency>
         <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-core-launch</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-core-boot</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-core-common</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-core-secure</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-starter-social</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-starter-log</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-starter-swagger</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-starter-mybatis</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-starter-oss</artifactId>
-        <version>${revision}</version>
-      </dependency>
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-starter-cache</artifactId>
+        <artifactId>little-security-starter</artifactId>
         <version>${revision}</version>
       </dependency>
       <!-- http -->
@@ -351,6 +308,46 @@
     </dependencies>
   </dependencyManagement>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.retry</groupId>
+      <artifactId>spring-retry</artifactId>
+    </dependency>
+    <!-- validator -->
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.dreamlu</groupId>
+      <artifactId>mica-auto</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+
   <build>
     <finalName>${project.name}</finalName>
     <resources>
@@ -502,32 +499,6 @@
               </execution>
             </executions>
           </plugin>
-          <!-- GPG -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
-            <executions>
-              <execution>
-                <phase>verify</phase>
-                <goals>
-                  <goal>sign</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          <!-- Nexus -->
-          <!--<plugin>
-              <groupId>org.sonatype.plugins</groupId>
-              <artifactId>nexus-staging-maven-plugin</artifactId>
-              <version>1.6.8</version>
-              <extensions>true</extensions>
-              <configuration>
-                  <serverId>oss</serverId>
-                  <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                  <autoReleaseAfterClose>true</autoReleaseAfterClose>
-              </configuration>
-          </plugin>-->
         </plugins>
       </build>
     </profile>
