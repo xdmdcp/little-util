@@ -44,7 +44,7 @@
   <modules>
     <module>little-common</module>
 <!--    <module>little-core</module>-->
-    <module>little-security-starter</module>
+<!--    <module>little-security-starter</module>-->
 <!--    <module>little-log-starter</module>-->
   </modules>
 
@@ -83,11 +83,11 @@
 <!--        <artifactId>little-core</artifactId>-->
 <!--        <version>${revision}</version>-->
 <!--      </dependency>-->
-      <dependency>
-        <groupId>cn.chenlijian.little</groupId>
-        <artifactId>little-security-starter</artifactId>
-        <version>${revision}</version>
-      </dependency>
+<!--      <dependency>-->
+<!--        <groupId>cn.chenlijian.little</groupId>-->
+<!--        <artifactId>little-security-starter</artifactId>-->
+<!--        <version>${revision}</version>-->
+<!--      </dependency>-->
       <!-- http -->
       <dependency>
         <groupId>com.squareup.okhttp3</groupId>
