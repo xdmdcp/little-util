@@ -1,6 +1,6 @@
 package cn.chenlijian.little.starter.log.service;
 
-import cn.chenlijian.little.starter.log.entity.OptLogDTO;
+import cn.chenlijian.little.common.entity.log.ApiLogDTO;
 
 /**
  * 日志发布者接口
@@ -14,5 +14,5 @@ public interface LogPublisher {
      *
      * @param record 操作日志记录对象，包含日志的相关信息
      */
-    void publish(OptLogDTO record);
+    void publish(ApiLogDTO record);
 }

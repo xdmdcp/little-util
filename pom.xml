@@ -94,6 +94,11 @@
                 <artifactId>little-starter-log</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.chenlijian.little</groupId>
+                <artifactId>little-starter-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- http -->
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>

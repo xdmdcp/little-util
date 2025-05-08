@@ -1,7 +1,5 @@
 package cn.chenlijian.little.starter.log.props;
 
-import cn.chenlijian.little.starter.log.service.LogPublisher;
-import cn.chenlijian.little.starter.log.service.impl.DefaultLogPublisher;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -15,8 +13,8 @@ import java.util.List;
  * @author chenlijian xdmdcp@163.com
  */
 @Data
-@ConfigurationProperties(prefix = OptLogProperties.PREFIX)
-public class OptLogProperties {
+@ConfigurationProperties(prefix = LittleLogProperties.PREFIX)
+public class LittleLogProperties {
     /**
      * 配置属性前缀
      * 用于在配置文件中标识属于本类的属性
@@ -30,20 +28,15 @@ public class OptLogProperties {
     private boolean enabled = true;
 
     /**
-     * 日志存储类型
-     */
-    private OptLogStorageType type = OptLogStorageType.CONSOLE;
-
-    /**
      * 需要排除的日志路径列表
      * 用于指定某些路径的日志不被记录，以避免不必要的日志信息
      */
     private List<String> excludePaths = List.of("/health");
 
-    /**
-     * 日志发布器类
-     * 用于指定实现LogPublisher接口的日志发布器，默认为DefaultLogPublisher
-     */
-    private Class<? extends LogPublisher> publisher = DefaultLogPublisher.class;
+//    /**
+//     * 日志发布器类
+//     * 用于指定实现LogPublisher接口的日志发布器，默认为DefaultLogPublisher
+//     */
+//    private Class<? extends LogPublisher> publisher = DefaultLogPublisher.class;
 
 }

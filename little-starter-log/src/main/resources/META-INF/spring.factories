@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  cn.chenlijian.little.starter.log.LogAutoConfiguration
+  cn.chenlijian.little.starter.log.LittleLogAutoConfiguration

@@ -1,6 +1,6 @@
 package cn.chenlijian.little.starter.log.service.impl;
 
-import cn.chenlijian.little.starter.log.entity.OptLogDTO;
+import cn.chenlijian.little.common.entity.log.ApiLogDTO;
 import cn.chenlijian.little.starter.log.service.LogPublisher;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class DefaultLogPublisher implements LogPublisher {
 
     /**
      * 异步发布日志
-     * 该方法接收一个OptLogRecord对象作为参数，代表操作日志记录
+     * 该方法接收一个ApiLogDTO对象作为参数，代表操作日志记录
      * 使用JSONUtil将日志记录对象转换为JSON字符串，并通过日志框架打印出来
      * 此方法使用了异步注解@Async，意味着它将在一个单独的线程中执行，不会阻塞主调用线程
      *
@@ -27,8 +27,8 @@ public class DefaultLogPublisher implements LogPublisher {
      */
     @Async
     @Override
-    public void publish(OptLogDTO logDTO) {
+    public void publish(ApiLogDTO logDTO) {
         // 默认实现：打印日志，可扩展为存储数据库
-        log.info("[OperationLog] {}", JSONUtil.toJsonStr(logDTO));
+        log.info("[ApiLogDTO] {}", JSONUtil.toJsonStr(logDTO));
     }
 }
