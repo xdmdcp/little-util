@@ -47,6 +47,7 @@
         <module>little-starter-log</module>
         <module>little-starter-security</module>
         <module>little-starter-web</module>
+        <module>little-starter-validation</module>
     </modules>
 
     <dependencyManagement>
