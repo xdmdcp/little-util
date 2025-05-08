@@ -48,6 +48,7 @@
         <module>little-starter-security</module>
         <module>little-starter-web</module>
         <module>little-starter-validation</module>
+        <module>little-starter-swagger</module>
     </modules>
 
     <dependencyManagement>

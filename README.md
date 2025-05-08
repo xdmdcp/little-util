@@ -13,10 +13,10 @@
 - [ ] little-starter-validation: 参数校验模块，如验证注解和验证控制器等。
 - [ ] little-starter-mybatis: MyBatis Plus 集成模块，提供分页拦截器、SQL 日志等功能。
 - [ ] little-starter-jpa: JPA 集成模块，提供分页拦截器、SQL 日志等功能。
+- [ ] little-starter-social: 第三方登录模块，基于 JustAuth 实现。
 - [ ] little-starter-cache: 缓存模块，支持本地缓存、Redis 缓存、Memcached 缓存等。
 - [ ] little-starter-oss: 对象存储模块，支持阿里云 OSS、MinIO、七牛云、腾讯云 COS 等。
 - [ ] little-starter-mq: 消息队列模块，支持 Kafka、RabbitMQ、RocketMQ 等。
-- [ ] little-starter-social: 第三方登录模块，基于 JustAuth 实现。
 
 ## 应用模块
 
