@@ -1,4 +1,4 @@
-package cn.chenlijian.little.starter.log.service;
+package cn.chenlijian.little.starter.log.publisher;
 
 import cn.chenlijian.little.common.entity.log.ApiLogDTO;
 

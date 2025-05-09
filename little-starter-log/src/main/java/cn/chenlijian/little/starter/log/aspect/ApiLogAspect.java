@@ -4,7 +4,7 @@ import cn.chenlijian.little.common.annotation.log.ApiLog;
 import cn.chenlijian.little.common.entity.log.ApiLogDTO;
 import cn.chenlijian.little.core.context.ContextUtil;
 import cn.chenlijian.little.starter.log.props.LittleLogProperties;
-import cn.chenlijian.little.starter.log.service.LogPublisher;
+import cn.chenlijian.little.starter.log.publisher.LogPublisher;
 import cn.chenlijian.little.starter.log.utils.LogUtil;
 import cn.chenlijian.little.starter.log.utils.WebUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;

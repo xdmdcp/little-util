@@ -2,8 +2,8 @@ package cn.chenlijian.little.starter.log;
 
 import cn.chenlijian.little.starter.log.aspect.ApiLogAspect;
 import cn.chenlijian.little.starter.log.props.LittleLogProperties;
-import cn.chenlijian.little.starter.log.service.LogPublisher;
-import cn.chenlijian.little.starter.log.service.impl.DefaultLogPublisher;
+import cn.chenlijian.little.starter.log.publisher.LogPublisher;
+import cn.chenlijian.little.starter.log.publisher.DefaultLogPublisher;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
