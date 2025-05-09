@@ -20,6 +20,7 @@ import org.springframework.context.expression.MethodBasedEvaluationContext;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.util.AntPathMatcher;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -35,6 +36,7 @@ public class ApiLogAspect {
     private static final int MAX_LENGTH = 65535;
     private final ExpressionParser EXPRESSION_PARSER = new SpelExpressionParser();
     private final DefaultParameterNameDiscoverer PARAMETER_NAME_DISCOVERER = new DefaultParameterNameDiscoverer();
+    private final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
     private final LittleLogProperties logProperties;
     private final LogPublisher logPublisher;
 
@@ -129,7 +131,28 @@ public class ApiLogAspect {
      * @return true 表示需要记录日志
      */
     private boolean check(JoinPoint joinPoint, ApiLog apiLog) {
-        // TODO 跳过需要忽略的url
-        return apiLog.enabled();
+        // 如果注解标记为不启用，直接返回 false
+        if (!apiLog.enabled()) {
+            return false;
+        }
+
+        // 获取请求信息
+        HttpServletRequest request = WebUtil.getRequest();
+        if (request == null) {
+            return false;
+        }
+
+        String requestUri = request.getRequestURI();
+
+        // 检查是否命中 excludePaths
+        for (String pattern : logProperties.getExcludePaths()) {
+            if (PATH_MATCHER.match(pattern, requestUri)) {
+                log.debug("请求路径 {} 命中排除路径 {}，不记录日志", requestUri, pattern);
+                return false; // 匹配到排除路径，不记录日志
+            }
+        }
+
+        return true; // 默认记录日志
     }
+
 }
