@@ -29,31 +29,32 @@ public @interface ApiLog {
      */
     boolean enabled() default true;
 
-    /**
-     * 是否拼接Controller类上的描述值
-     *
-     * @return 是否拼接Controller类上的描述值
-     */
-    boolean controllerApiValue() default true;
-
-    /**
-     * 记录执行参数
-     *
-     * @return 是否记录执行参数
-     */
-    boolean request() default true;
-
-    /**
-     * 当 request = false时， 方法报错记录请求参数
-     *
-     * @return 当 request = false时， 方法报错记录请求参数
-     */
-    boolean requestByError() default true;
-
-    /**
-     * 记录返回参数
-     *
-     * @return 是否记录返回参数
-     */
-    boolean response() default true;
+    // TODO 待完善
+//    /**
+//     * 是否拼接Controller类上的描述值
+//     *
+//     * @return 是否拼接Controller类上的描述值
+//     */
+//    boolean controllerApiValue() default true;
+//
+//    /**
+//     * 记录执行参数
+//     *
+//     * @return 是否记录执行参数
+//     */
+//    boolean request() default true;
+//
+//    /**
+//     * 当 request = false时， 方法报错记录请求参数
+//     *
+//     * @return 当 request = false时， 方法报错记录请求参数
+//     */
+//    boolean requestByError() default true;
+//
+//    /**
+//     * 记录返回参数
+//     *
+//     * @return 是否记录返回参数
+//     */
+//    boolean response() default true;
 }
