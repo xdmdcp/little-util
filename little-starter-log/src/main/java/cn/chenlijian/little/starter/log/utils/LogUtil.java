@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.context.expression.MethodBasedEvaluationContext;
 
 import java.lang.reflect.Method;
 
@@ -26,13 +27,32 @@ public class LogUtil {
      */
     public static void addRequestInfoToLog(HttpServletRequest request, ApiLogDTO logDTO) {
         if (ObjectUtil.isNotEmpty(request)) {
-            logDTO.setRequestIp(WebUtil.getIP(request));
-            logDTO.setUa(request.getHeader(WebUtil.USER_AGENT_HEADER));
-            logDTO.setRequestUri(URLUtil.getPath(request.getRequestURI()));
             logDTO.setHttpMethod(request.getMethod());
-            logDTO.setParams(WebUtil.getRequestParamString(request));
+            logDTO.setRequestPath(URLUtil.getPath(request.getRequestURI()));
+            logDTO.setRequestParams(WebUtil.getRequestParamString(request));
+            logDTO.setClientIp(WebUtil.getIP(request));
+            logDTO.setUserAgent(request.getHeader(WebUtil.USER_AGENT_HEADER));
         }
     }
+
+    /**
+     * 从HTTP请求中获取追踪ID
+     * 追踪ID用于跟踪和监控请求在系统中的处理过程，有助于问题定位和性能分析
+     *
+     * @param request HTTP请求对象，不能为空
+     * @param traceIdKey 追踪ID的键名，用于从请求头中获取追踪ID
+     * @return 返回追踪ID字符串，如果请求中没有对应的追踪ID，则返回null
+     */
+    public static String getTraceId(HttpServletRequest request, String traceIdKey) {
+        // 检查请求对象是否非空，以避免空指针异常
+        if (request != null) {
+            // 从请求头中获取追踪ID，并返回
+            return request.getHeader(traceIdKey);
+        }
+        // 如果请求对象为空，则返回null，表示无法获取追踪ID
+        return null;
+    }
+
 
     /**
      * 获取方法的描述信息

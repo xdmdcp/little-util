@@ -67,7 +67,7 @@ public final class ContextUtil {
         return get(ContextConstants.JWT_KEY_USER_ID, Long.class, 0L);
     }
 
-    public static String getUserName() {
+    public static String getUsername() {
         return get(ContextConstants.JWT_KEY_NAME);
     }
 

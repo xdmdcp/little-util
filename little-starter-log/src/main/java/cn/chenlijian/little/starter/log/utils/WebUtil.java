@@ -2,14 +2,19 @@ package cn.chenlijian.little.starter.log.utils;
 
 import cn.chenlijian.little.core.utils.StrPool;
 import cn.hutool.core.util.StrUtil;
+import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
@@ -18,15 +23,6 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
     public static final String USER_AGENT_HEADER = "user-agent";
 
     public static final String UN_KNOWN = "unknown";
-
-    /**
-     * 获取ip
-     *
-     * @return {String}
-     */
-    public static String getIP() {
-        return getIP(WebUtil.getRequest());
-    }
 
     /**
      * 获取 HttpServletRequest
@@ -148,4 +144,96 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
         }
         return str.replaceAll("&amp;", "&");
     }
+
+    /**
+     * 获取 request 请求体
+     *
+     * @param servletInputStream servletInputStream
+     * @return body
+     */
+    public static String getRequestBody(ServletInputStream servletInputStream) {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(servletInputStream, StandardCharsets.UTF_8));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (servletInputStream != null) {
+                try {
+                    servletInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+    public static String getRequestContent(HttpServletRequest request) {
+        if (request instanceof ContentCachingRequestWrapper wrapper) {
+            byte[] body = wrapper.getContentAsByteArray();
+            return body.length > 0 ? new String(body, StandardCharsets.UTF_8) : "";
+        } else {
+            try (ServletInputStream inputStream = request.getInputStream()) {
+                return getRequestBody(inputStream);
+            } catch (IOException e) {
+                // 可选：使用日志框架记录异常，如 log.error("读取请求体失败", e);
+                e.printStackTrace();
+                return "";
+            }
+        }
+    }
+
+
+//    /**
+//     * 获取 request 请求内容
+//     *
+//     * @param request request
+//     * @return {String}
+//     */
+//    public static String getRequestContent(HttpServletRequest request) {
+//        try {
+//            String queryString = request.getQueryString();
+//            if (StrUtil.isNotBlank(queryString)) {
+//                return new String(queryString.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).replaceAll("&amp;", "&").replaceAll("%22", "\"");
+//            }
+//            String charEncoding = request.getCharacterEncoding();
+//            if (charEncoding == null) {
+//                charEncoding = StrPool.UTF_8;
+//            }
+//            byte[] buffer = getRequestBody(request.getInputStream()).getBytes();
+//            String str = new String(buffer, charEncoding).trim();
+//            if (StrUtil.isBlank(str)) {
+//                StringBuilder sb = new StringBuilder();
+//                Enumeration<String> parameterNames = request.getParameterNames();
+//                while (parameterNames.hasMoreElements()) {
+//                    String key = parameterNames.nextElement();
+//                    String value = request.getParameter(key);
+//                    sb.append(key).append("=").append(value).append("&");
+//                }
+//                str = StrUtil.removeSuffix(sb.toString(), "&");
+//            }
+//            return str.replaceAll("&amp;", "&");
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//            return StrPool.EMPTY;
+//        }
+//    }
+
+    public static HttpServletResponse getResponse() {
+        return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse();
+    }
+
 }
