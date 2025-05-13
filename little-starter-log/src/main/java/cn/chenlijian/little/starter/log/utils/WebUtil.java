@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestAttributes;
@@ -18,6 +19,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
+@Slf4j
 public class WebUtil extends org.springframework.web.util.WebUtils {
 
     public static final String USER_AGENT_HEADER = "user-agent";
@@ -190,7 +192,7 @@ public class WebUtil extends org.springframework.web.util.WebUtils {
                 return getRequestBody(inputStream);
             } catch (IOException e) {
                 // 可选：使用日志框架记录异常，如 log.error("读取请求体失败", e);
-                e.printStackTrace();
+                log.error("读取请求体失败", e);
                 return "";
             }
         }

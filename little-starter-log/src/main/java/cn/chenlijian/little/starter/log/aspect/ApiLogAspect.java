@@ -6,6 +6,7 @@ import cn.chenlijian.little.core.context.ContextUtil;
 import cn.chenlijian.little.core.utils.StrPool;
 import cn.chenlijian.little.starter.log.props.LittleLogProperties;
 import cn.chenlijian.little.starter.log.publisher.LogPublisher;
+import cn.chenlijian.little.starter.log.sampling.SamplingStrategy;
 import cn.chenlijian.little.starter.log.utils.LogUtil;
 import cn.chenlijian.little.starter.log.utils.WebUtil;
 import cn.hutool.core.exceptions.ExceptionUtil;
@@ -44,6 +45,7 @@ public class ApiLogAspect {
     private final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
     private final LittleLogProperties properties;
     private final LogPublisher logPublisher;
+    private final SamplingStrategy samplingStrategy;
 
     /**
      * 环绕通知，用于记录API日志
@@ -66,8 +68,9 @@ public class ApiLogAspect {
             Long end = System.currentTimeMillis();
             HttpServletRequest request = WebUtil.getRequest();
             HttpServletResponse response = WebUtil.getResponse();
+            boolean hasError = throwable != null;
             // 只有需要记录日志时才构造并发布日志
-            if (check(request, apiLog)) {
+            if (check(request, apiLog) && shouldRecordLog(request, hasError)) {
                 ApiLogDTO logDTO = buildApiLogDTO(point, apiLog, request, response, result, throwable, start, end);
                 logPublisher.publish(logDTO);
             }
@@ -79,6 +82,10 @@ public class ApiLogAspect {
         }
 
         return result;
+    }
+
+    private boolean shouldRecordLog(HttpServletRequest request, boolean hasError) {
+        return samplingStrategy.shouldSample(request, hasError);
     }
 
     /**

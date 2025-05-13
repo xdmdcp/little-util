@@ -39,24 +39,4 @@ public class LittleLogProperties {
      */
     private String traceIdKey = "X-Trace-ID";
 
-    /**
-     * 是否启用字段脱敏
-     */
-    private boolean enableMasking = false;
-
-    /**
-     * 要脱敏的字段列表
-     */
-    private List<String> maskedFields = List.of("password", "token");
-
-
-    // TODO 采样率
-//    private Double sampleRate = 0.1;
-
-//    /**
-//     * 日志发布器类
-//     * 用于指定实现LogPublisher接口的日志发布器，默认为DefaultLogPublisher
-//     */
-//    private Class<? extends LogPublisher> publisher = DefaultLogPublisher.class;
-
 }
