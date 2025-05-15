@@ -20,9 +20,9 @@ public class LittleSecurityProperties {
 
     /**
      * 是否启用安全模块
-     * 默认值为 false，表示默认情况下安全模块是启用的
+     * 默认值为 true，表示默认情况下安全模块是启用的
      */
-    private boolean enabled = false;
+    private boolean enabled = true;
 
     /**
      * 权限是否区分大小写

@@ -35,6 +35,25 @@ public class UriSecurityAspect implements ApplicationContextAware {
         this.properties = properties;
     }
 
+    /**
+     * 判断权限是否匹配
+     *
+     * @param requiredPermission 需要的权限
+     * @param userAuthority      用户拥有的权限
+     * @param caseSensitive      是否区分大小写
+     * @return 是否匹配
+     */
+    public static boolean isAuthorityMatch(String requiredPermission, String userAuthority, boolean caseSensitive) {
+        if (requiredPermission == null || userAuthority == null) {
+            return false;
+        }
+        if (caseSensitive) {
+            return requiredPermission.equals(userAuthority);
+        } else {
+            return requiredPermission.equalsIgnoreCase(userAuthority);
+        }
+    }
+
     @Around("@annotation(cn.chenlijian.little.common.biz.security.annotation.PreAuth) || @within(cn.chenlijian.little.common.biz.security.annotation.PreAuth)")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 
@@ -76,6 +95,7 @@ public class UriSecurityAspect implements ApplicationContextAware {
                 .anyMatch(a -> isAuthorityMatch(requiredPermission, a.getAuthority(), properties.getCaseSensitive()));
 
         if (!hasPermission) {
+            log.debug("Access denied for URI: {}, required permission: {}", requestURI, requiredPermission);
             throw new RuntimeException("Permission denied: " + requiredPermission);
         }
 
@@ -90,24 +110,5 @@ public class UriSecurityAspect implements ApplicationContextAware {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         return method.getAnnotation(PreAuth.class);
-    }
-
-    /**
-     * 判断权限是否匹配
-     *
-     * @param requiredPermission 需要的权限
-     * @param userAuthority      用户拥有的权限
-     * @param caseSensitive      是否区分大小写
-     * @return 是否匹配
-     */
-    public static boolean isAuthorityMatch(String requiredPermission, String userAuthority, boolean caseSensitive) {
-        if (requiredPermission == null || userAuthority == null) {
-            return false;
-        }
-        if (caseSensitive) {
-            return requiredPermission.equals(userAuthority);
-        } else {
-            return requiredPermission.equalsIgnoreCase(userAuthority);
-        }
     }
 }

@@ -1,6 +1,5 @@
 package cn.chenlijian.little.starter.security.utils;
 
-import cn.chenlijian.little.starter.security.constant.AuthConstants;
 import cn.chenlijian.little.starter.security.exception.ExpiredJwtException;
 import cn.chenlijian.little.starter.security.exception.InvalidJwtTokenException;
 import cn.chenlijian.little.starter.security.props.LittleSecurityProperties;
@@ -14,7 +13,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -44,8 +45,13 @@ public class JwtUtil {
         String secret = properties.getJwtSecret();
         // 确保密钥不为空且长度足够，否则抛出异常
         if (secret == null || secret.length() < 32) {
-            throw new IllegalArgumentException("JWT secret must not be null or too short.");
+            throw new IllegalArgumentException(
+                    "JWT secret must be configured with at least 32 characters. " +
+                            "Please set 'little.security.jwt-secret' in your configuration file, " +
+                            "and ensure it is a strong, random string (e.g., base64-encoded)."
+            );
         }
+
 
         this.expiration = properties.getJwtExpiration();
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)); // 指定 UTF-8 编码

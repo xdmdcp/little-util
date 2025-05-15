@@ -46,39 +46,42 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             String token = jwtUtil.extractToken(request);
-            if (token != null) {
-                Claims claims = jwtUtil.parseToken(token);
-                if (jwtUtil.isTokenExpired(claims)) {
-                    throw new ExpiredJwtException("JWT token expired");
-                }
-
-                String username = jwtUtil.getUsernameFromClaims(claims);
-                if (username == null) {
-                    throw new InvalidJwtTokenException("Invalid JWT token");
-                }
-
-                UserDetails userDetail = this.userDetailsService.loadUserByUsername(username);
-
-                Collection<? extends GrantedAuthority> authorities = userDetail.getAuthorities();
-
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        username, null, authorities
-                );
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+            if (token == null) {
+                log.info("No JWT token found in request headers.");
+                filterChain.doFilter(request, response);
+                return;
             }
+
+            Claims claims = jwtUtil.parseToken(token);
+
+            if (jwtUtil.isTokenExpired(claims)) {
+                throw new ExpiredJwtException("JWT token expired");
+            }
+
+            String username = jwtUtil.getUsernameFromClaims(claims);
+            log.debug("Extracted username from JWT: {}", username);
+
+            if (username == null) {
+                throw new InvalidJwtTokenException("Invalid JWT token");
+            }
+
+            UserDetails userDetail = this.userDetailsService.loadUserByUsername(username);
+            Collection<? extends GrantedAuthority> authorities = userDetail.getAuthorities();
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, authorities);
+
+            log.trace("Setting authentication for user: {}", username);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (InvalidJwtTokenException e) {
-            logger.warn("JWT validation failed: {}", e);
+            log.warn("JWT validation failed: {}. Stack trace: ", e.getMessage(), e);
             SecurityContextHolder.clearContext();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
             return;
         } catch (Exception ex) {
-            logger.error("Unexpected error during JWT processing", ex);
+            log.error("Unexpected error during JWT processing: ", ex);
             SecurityContextHolder.clearContext();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Authentication error");
             return;
-        } finally {
-            SecurityContextHolder.clearContext();
         }
 
         filterChain.doFilter(request, response);

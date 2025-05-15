@@ -50,19 +50,36 @@ public class LittleSecurityAutoConfiguration {
         return new JwtAuthenticationFilter(userDetailsService, jwtUtil);
     }
 
+    /**
+     * 配置Security过滤链
+     * 该方法用于定义Web安全配置，如请求的认证方式、CSRF保护、会话管理等
+     * 使用@Bean注解声明该方法返回一个由Spring管理的Bean
+     * 使用@ConditionalOnMissingBean注解表示只有在容器中没有找到同类型的Bean时才创建该Bean
+     *
+     * @param http 用于配置Web安全设置的对象
+     * @param jwtAuthenticationFilter 自定义的JWT认证过滤器，用于在该链中添加JWT验证功能
+     * @return 返回配置好的SecurityFilterChain对象
+     * @throws Exception 配置过程中可能抛出的异常
+     */
     @Bean
     @ConditionalOnMissingBean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
+        log.debug("Exclude paths configured: {}", properties.getExcludePaths());
+
         return http
+                // 禁用CSRF保护，适用于无状态认证方案
                 .csrf(AbstractHttpConfigurer::disable)
+                // 配置会话管理策略为无状态
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // 在UsernamePasswordAuthenticationFilter之前添加JWT认证过滤器
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> {
                     // 批量配置不需要认证的请求路径
                     for (String path : properties.getExcludePaths()) {
                         auth.requestMatchers(path).permitAll();
                     }
+                    // 配置所有其他请求需要认证
                     auth.anyRequest().authenticated();
                 })
                 .build();
