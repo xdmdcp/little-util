@@ -1,4 +1,4 @@
-package cn.chenlijian.little.core.utils;
+package cn.chenlijian.little.common.constant;
 
 /**
  * 常用字符串

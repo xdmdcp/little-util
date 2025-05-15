@@ -21,7 +21,7 @@
     <!-- 核心模块依赖 -->
     <dependency>
       <groupId>cn.chenlijian.little</groupId>
-      <artifactId>little-core</artifactId>
+      <artifactId>little-common</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

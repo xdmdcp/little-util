@@ -1,6 +1,6 @@
 package cn.chenlijian.little.starter.log.publisher;
 
-import cn.chenlijian.little.common.entity.log.ApiLogDTO;
+import cn.chenlijian.little.common.biz.log.dto.ApiLogDTO;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

@@ -1,8 +1,8 @@
 package cn.chenlijian.little.starter.log.utils;
 
-import cn.chenlijian.little.common.annotation.log.ApiLog;
-import cn.chenlijian.little.common.entity.log.ApiLogDTO;
-import cn.chenlijian.little.core.utils.StrPool;
+import cn.chenlijian.little.common.biz.log.annotaion.ApiLog;
+import cn.chenlijian.little.common.biz.log.dto.ApiLogDTO;
+import cn.chenlijian.little.common.constant.StrPool;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.URLUtil;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,6 +1,6 @@
 package cn.chenlijian.little.starter.log.utils;
 
-import cn.chenlijian.little.core.utils.StrPool;
+import cn.chenlijian.little.common.constant.StrPool;
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;

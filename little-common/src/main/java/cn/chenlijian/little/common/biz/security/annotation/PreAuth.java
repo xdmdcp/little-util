@@ -1,4 +1,4 @@
-package cn.chenlijian.little.common.annotation.security;
+package cn.chenlijian.little.common.biz.security.annotation;
 
 import java.lang.annotation.*;
 

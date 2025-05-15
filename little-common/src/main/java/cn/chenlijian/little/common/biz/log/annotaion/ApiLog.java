@@ -1,4 +1,4 @@
-package cn.chenlijian.little.common.annotation.log;
+package cn.chenlijian.little.common.biz.log.annotaion;
 
 import java.lang.annotation.*;
 

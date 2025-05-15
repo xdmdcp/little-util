@@ -1,4 +1,4 @@
-package cn.chenlijian.little.common.entity.log;
+package cn.chenlijian.little.common.biz.log.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

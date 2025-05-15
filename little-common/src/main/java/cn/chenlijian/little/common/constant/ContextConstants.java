@@ -1,4 +1,4 @@
-package cn.chenlijian.little.core.context;
+package cn.chenlijian.little.common.constant;
 
 /**
  * 上下文常量
@@ -37,6 +37,10 @@ public final class ContextConstants {
      * User信息 认证请求头前缀
      */
     public static final String BEARER_HEADER_PREFIX_EXT = "Bearer%20";
+    /**
+     * User信息 认证请求头前缀长度
+     */
+    public static final int BEARER_HEADER_PREFIX_LENGTH = BEARER_HEADER_PREFIX.length();
 
     /**
      * Client信息认证请求头

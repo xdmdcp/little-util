@@ -20,7 +20,7 @@
   <dependencies>
     <dependency>
       <groupId>cn.chenlijian.little</groupId>
-      <artifactId>little-core</artifactId>
+      <artifactId>little-common</artifactId>
     </dependency>
     <dependency>
       <groupId>jakarta.servlet</groupId>

@@ -1,6 +1,6 @@
 package cn.chenlijian.little.starter.log.publisher;
 
-import cn.chenlijian.little.common.entity.log.ApiLogDTO;
+import cn.chenlijian.little.common.biz.log.dto.ApiLogDTO;
 
 /**
  * 日志发布者接口
