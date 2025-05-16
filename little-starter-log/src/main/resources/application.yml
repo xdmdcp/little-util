@@ -1,0 +1,16 @@
+little:
+  # 日志相关配置
+  log:
+    # 是否启用日志记录，默认值为 true
+    enabled: true
+    # 用于指定日志记录的请求头中的 traceId 的 key，默认值为 X-Trace-ID
+    traceIdKey: "X-Trace-ID"
+    # 用于指定某些路径的日志不被记录，以避免不必要的日志信息
+    exclude-paths:
+      - /actuator/**
+    # 日志采样相关配置
+    sampling:
+      # 采样率，表示日志记录的概率，默认值为 1（即 100% 记录）
+      rate: 1
+      # 是否强制记录异常请求
+      includeError: true

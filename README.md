@@ -17,8 +17,8 @@ little 是一个基于 Java 17 与 Spring Boot 的轻量级多模块工具框架
 ### 扩展模块
 
 -  ✅ [little-starter-log](./little-starter-log/README.md)：日志处理模块，集成日志记录、异常处理、事件监听、日志采样等功能，支持日志发布机制。
--  🟡 little-starter-security：安全模块，计划集成 JWT 认证、权限校验、接口访问控制等安全相关能力。
--  ❌ little-starter-swagger：API 文档模块，用于集成 Swagger 或 Knife4j，自动生成和展示 RESTful 接口文档。
+-  ✅ little-starter-security：安全模块，计划集成 JWT 认证、权限校验、接口访问控制等安全相关能力。
+-  🟡 little-starter-swagger：API 文档模块，用于集成 Swagger 或 Knife4j，自动生成和展示 RESTful 接口文档。
 -  ❌ little-starter-validation：参数校验模块，提供统一的参数校验能力，支持自定义注解及异常处理。
 -  ❌ little-starter-mybatis：MyBatis Plus 集成模块，提供分页拦截器、SQL 日志打印、通用 CRUD 封装等功能。
 -  ❌ little-starter-jpa：JPA 集成模块，提供类似 MyBatis Plus 的便捷操作与扩展功能。

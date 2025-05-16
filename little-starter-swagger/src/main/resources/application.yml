@@ -1,0 +1,23 @@
+little:
+  swagger:
+    enabled: true
+    base-packages:
+      - cn.chenlijian.little
+    exclude-packages:
+      - cn.chenlijian.little.test
+    base-path:
+      - ^/api.*
+    exclude-path:
+      - ^/internal.*
+    title: "My Custom API Docs"
+    description: "Customized OpenAPI documentation for my project."
+    version: "v2.0.0"
+    contact:
+      name: "写代码的陈皮"
+      email: "xdmdcp@163.com"
+      url: "https://chenlijian.cn"
+    authorization:
+      name: "BearerAuth"
+      auth-regex: "^/secure.*"
+      token-url-list:
+        - "/auth/token"

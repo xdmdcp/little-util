@@ -6,7 +6,7 @@
   <parent>
     <groupId>cn.chenlijian.little</groupId>
     <artifactId>little</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>little-starter-swagger</artifactId>
@@ -15,6 +15,30 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <knife4j.version>4.0.0</knife4j.version>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>cn.chenlijian.little</groupId>
+      <artifactId>little-common</artifactId>
+    </dependency>
+    <!-- Spring Boot 自动配置支持 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+    </dependency>
+    <!-- Knife4j 核心依赖 -->
+    <dependency>
+      <groupId>com.github.xiaoymin</groupId>
+      <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+      <version>${knife4j.version}</version>
+    </dependency>
+
+  </dependencies>
 
 </project>

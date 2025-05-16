@@ -1,0 +1,21 @@
+little:
+  # 安全配置
+  security:
+    # 启用或禁用安全配置
+    enabled: true
+    # 是否区分大小写
+    case-sensitive: false
+    # 配置不需要安全认证的路径
+    exclude-paths:
+      - /login
+      - /error
+      - /actuator/health/**
+      - /swagger-ui/**
+    # 必须为至少 32 字符的字符串，推荐使用 Base64 编码
+    jwt-secret: "your-32-byte-secret-key-here===="
+    # JWT令牌的过期时间（毫秒）
+    jwt-expiration: 86400000
+    # 包含JWT令牌的HTTP请求头
+    jwt-header: "Authorization"
+    # JWT令牌的前缀
+    jwt-prefix: "Bearer "

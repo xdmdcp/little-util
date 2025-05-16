@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.chenlijian.little.starter.swagger.LittleSwaggerAutoConfiguration
+
+org.springframework.context.annotation.ImportSelector=\
+cn.chenlijian.little.starter.swagger.web.SwaggerWebMvcConfigurer
