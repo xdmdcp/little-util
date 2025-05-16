@@ -8,12 +8,9 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springdoc.core.configuration.SpringDocConfiguration;
 import org.springdoc.core.customizers.GlobalOpenApiCustomizer;
 import org.springdoc.core.models.GroupedOpenApi;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -29,8 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @Configuration
-@AllArgsConstructor
-@AutoConfigureBefore(SpringDocConfiguration.class)
+//@AutoConfigureBefore(SpringDocConfiguration.class)
 @EnableConfigurationProperties(LittleSwaggerProperties.class)
 @ConditionalOnProperty(prefix = LittleSwaggerProperties.PREFIX, name = "enabled", havingValue = "true")
 public class LittleSwaggerAutoConfiguration {
@@ -42,6 +38,10 @@ public class LittleSwaggerAutoConfiguration {
     private static final String TOKEN_HEADER = "Little-Auth";
 
     private final LittleSwaggerProperties properties;
+
+    public LittleSwaggerAutoConfiguration(LittleSwaggerProperties properties) {
+        this.properties = properties;
+    }
 
     /**
      * 初始化OpenAPI对象
@@ -115,6 +115,7 @@ public class LittleSwaggerAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public GroupedOpenApi defaultApi() {
+        log.info("配置: {}", properties);
         // 获取并防御性复制配置项
         List<String> basePath = getOrDefault(properties.getBasePath(), Collections.singletonList(DEFAULT_BASE_PATH));
         List<String> excludePath = getOrDefault(properties.getExcludePath(), DEFAULT_EXCLUDE_PATH);

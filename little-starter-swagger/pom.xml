@@ -15,18 +15,13 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <knife4j.version>4.0.0</knife4j.version>
+    <knife4j.version>4.5.0</knife4j.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>cn.chenlijian.little</groupId>
       <artifactId>little-common</artifactId>
-    </dependency>
-    <!-- Spring Boot 自动配置支持 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-autoconfigure</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>

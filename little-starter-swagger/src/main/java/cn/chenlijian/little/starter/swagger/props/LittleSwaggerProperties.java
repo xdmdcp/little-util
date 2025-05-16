@@ -3,8 +3,6 @@ package cn.chenlijian.little.starter.swagger.props;
 import cn.chenlijian.little.common.constant.AppConstant;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,8 +14,6 @@ import static cn.chenlijian.little.starter.swagger.props.LittleSwaggerProperties
  * Swagger 自动配置属性类
  */
 @Data
-@Component
-@Validated
 @ConfigurationProperties(PREFIX)
 public class LittleSwaggerProperties {
 
@@ -41,7 +37,7 @@ public class LittleSwaggerProperties {
     /**
      * 要包含在文档中的 URL 路径规则（正则）
      */
-    private List<String> basePath = new ArrayList<>(Collections.singletonList("^/api.*"));
+    private List<String> basePath = new ArrayList<>(Collections.singletonList("/**"));
 
     /**
      * 排除的 URL 路径规则（正则）
