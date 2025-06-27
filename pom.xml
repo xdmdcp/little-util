@@ -49,6 +49,7 @@
     <module>little-starter-web</module>
     <module>little-starter-validation</module>
     <module>little-starter-swagger</module>
+    <module>little-starter-sms</module>
   </modules>
 
   <dependencyManagement>
